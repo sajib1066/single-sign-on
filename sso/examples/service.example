@@ -1,0 +1,17 @@
+[Unit]
+Description=sso-uWSGI-instance
+After=network.target postgresql-11.service
+
+[Service]
+User=centos
+Group=nginx
+WorkingDirectory=/opt/sso
+Environment="PATH=/opt/sso/venv/bin"
+ExecStart=/opt/sso/venv/bin/uwsgi --ini /opt/sso/uwsgi/uwsgi.ini
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
